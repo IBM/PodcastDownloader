@@ -3,3 +3,7 @@ pyPodcastParser>=2.0.0
 requests>=2.10.0
 gevent>=1.2.1
 wget>=3.2
+Flask>=0.12
+pecan>=1.2.1
+mysql-connector-python>=2.0.4
+pycurl>=7.43.0

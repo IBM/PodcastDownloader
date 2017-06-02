@@ -5,4 +5,5 @@ local.env
 backup.sh
 actions/mhpost/node_modules
 actions/mhpost/mhpost.zip
+VCAP_SERVICES.json
 .idea

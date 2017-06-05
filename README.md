@@ -42,11 +42,18 @@ Make sure you have docker installed locally and you have openwhisk/python2action
 docker images already built successfully.
 - `cp DownloaderAction.py  __main__.py`
 
+### Integrate Downloader action with the OpenStack swift client.
+In order to persist the downloaded podcast content on storage, now we support integrate
+with [OpenStack](https://www.openstack.org) swift client, to persist the downloaded content on [IBM object storage](https://www.bluemix.com).
+First, you need to provision an object storage service, and copy all your storage service
+authentication information to VCAP_SERVICES.json, the Downloader Action will read the VCAP_SERVICES.json
+file, to pass the storage services authentication.
+
 Make the zip python aciton.
 - `docker run --rm -v "$PWD:/tmp" openwhisk/python2action sh \
 -c "cd tmp; virtualenv virtualenv; source virtualenv/bin/activate; pip install -r requirements.txt;"`
 
-- `zip -r wgetPython.zip virtualenv __main__.py`
+- `zip -r wgetPython.zip virtualenv __main__.py VCAP_SERVICES.json`
 ## Deploy Downloader action to openwhisk platform as a web action
 
 `wsk action create /david.liu@cn.ibm.com_dliu/demo/wgetPython   --kind python:2 --web true wgetPython.zip`

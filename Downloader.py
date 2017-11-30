@@ -15,17 +15,17 @@ class DownloaderHandler(BaseHTTPRequestHandler):
             # get the correct url for wget
             url = str(item).split("?apikey=")[0]
             wget.download(url)
-        print "the list length is %d" % len(urls_to_download)
+        print("the list length is %d" % len(urls_to_download))
 
 
 def main():
     try:
         PORT = 8000
         httpd = HTTPServer(("", PORT), DownloaderHandler)
-        print "Serving at port %s " % PORT
+        print("Serving at port %s " % PORT)
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print  'shut down http server'
+        print('shut down http server')
         httpd.socket.close()
 
 

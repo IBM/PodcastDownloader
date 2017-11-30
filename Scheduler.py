@@ -20,21 +20,21 @@ def parse():
     urls_to_download = []
     for item in podcast.items:
         pprint.pprint(item.enclosure_url)
-        print type(item.enclosure_url)
+        print(type(item.enclosure_url))
         urls_to_download.append(item.enclosure_url)
     data = {'urls': list(urls_to_download)}
     return data
 
 
 def post():
-    print ('The url post to is %s' % url_to_post)
+    print('The url post to is %s' % url_to_post)
     req = urllib2.Request(url_to_post)
     req.add_header('Content-Type', 'application/json')
     urllib2.urlopen(req, json.dumps(data))
 
 
 def help():
-    print "help message"
+    print("help message")
 
 
 if __name__ == '__main__':

@@ -25,14 +25,13 @@ When the reader has completed this Code Pattern, they will understand how to:
 * [Microservices](https://www.ibm.com/developerworks/community/blogs/5things/entry/5_things_to_know_about_microservices?lang=en): Collection of fine-grained, loosely coupled services using a lightweight protocol to provide building blocks in modern application composition in the cloud.
 
 # Watch the Video
-[![](http://img.youtube.com/vi/Jxi7U7VOMYg/0.jpg)](https://www.youtube.com/watch?v=Jxi7U7VOMYg)
+[![](http://img.youtube.com/vi/95hDtAAzNnw/0.jpg)](https://www.youtube.com/watch?v=95hDtAAzNnw)
 
 # Steps
-Use the ``Deploy to IBM Cloud`` button **OR** create the services and run locally.
 
 ## Run locally
 
-1. [Clone the repo](1#-clone the-repo)
+1. [Clone the repo](1#-clone-the-repo)
 2. [Create database](#2-create-database)
 3. [Server side](#3-server-side)
 4. [Create user, podcast, and subscription](#4-create-user-podcast-and-database)
@@ -42,7 +41,7 @@ Use the ``Deploy to IBM Cloud`` button **OR** create the services and run locall
 
 #### Prerequisite
 Make sure you have a [Bluemix](https://console.ng.bluemix.net) account.
-It also helpful if you are slightly familiar with basic OpenWhisk commands [Model and idea](https://github.com/IBM/openwhisk-action-trigger-rule) and have installed the CLI.
+It also helpful if you are slightly familiar with basic OpenWhisk commands [Model and idea](https://github.com/IBM/openwhisk-action-trigger-rule) and have installed both the [Bluemix CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) and the Cloud Functions [Plugin](https://console.bluemix.net/openwhisk/learn/cli).
 
 #### Installation requirements:
 - Python2.7 Installed.
@@ -51,9 +50,10 @@ It also helpful if you are slightly familiar with basic OpenWhisk commands [Mode
 - curl command tool or similar tools available.
 
 ### 1. Clone the repo
-Clone the `PodcastDownloader` locally.  In a terminal, run:
+Clone the PodcastDownloader`locally.  In a terminal, run:
 ```
 $ git clone https://github.com/IBM/PodcastDownloader
+$ cd PodcastDownloader
 ```
 
 ### 2. Create database
@@ -65,11 +65,11 @@ $ mysql -u user -p < podcasts_downloader.sql
 
 ### 3. Server side
 Start the podcasts manager api server.
-
-- `export FLASK_APP=podcasts_manager.py`
-- `export FLASK_DEBUG=1`
-- `flask run`
-
+```
+$ export FLASK_APP=podcasts_manager.py
+$ export FLASK_DEBUG=1
+$ flask run
+```
 ### 3. Create user, podcast, and subscription
 Use curl to create the users, subscriptions, and podcasts.
 For example, suppose your podcast manager api server runs locally and listen on port 5000.
@@ -83,7 +83,7 @@ docker images already built successfully.
 - `cp DownloaderAction.py  __main__.py`
 
 #### Integrate Downloader action with the OpenStack swift client.
-In order to persist the downloaded podcast content on storage, now we support integration
+In order to persist the downloaded podcast content on storage, we now support integration
 with [OpenStack](https://www.openstack.org) swift client, to persist the downloaded content on [IBM Object Storage](https://www.bluemix.com).
 First, you need to provision an object storage service, and copy all your storage service
 authentication information to VCAP_SERVICES.json, the Downloader Action will read the VCAP_SERVICES.json
@@ -97,10 +97,15 @@ Make the zip python aciton.
 
 ### 5. Deploy Downloader action to OpenWhisk platform
 
- bx`wsk action create wgetPython --kind python:2 wgetPython.zip`
+`bx wsk action create wgetPython --kind python:2 wgetPython.zip`
 
 ### 6. Invoke downloader action from podcast manager
-` curl -X POST  -m 50 "http://localhost:5000/download?customername=liu&downloader_url=https://openwhisk.ng.bluemix.net/api/v1/namespaces/<cf_org>/<cf_space>wgetPython"` 
+` curl -X POST  -m 50 "http://localhost:5000/download?customername=liu&downloader_url=https://openwhisk.ng.bluemix.net/api/v1/namespaces/<cf_org>_<cf_space>/actions/wgetPython"` 
+
+## Links
+
+* [OpenWhisk](https://openwhisk.apache.org/)
+* [OpenStack Swift](https://wiki.openstack.org/wiki/Swift)
 
 ## License
 [Apache 2.0](LICENSE)

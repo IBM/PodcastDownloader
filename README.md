@@ -19,6 +19,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 4. Data is stored in Object Storage OpenStack Swift.
 
 ## Included components
+* [IBM Cloud Object Storage](https://console.bluemix.net/catalog/services/object-storage): Build and deliver cost effective apps and services with high reliability and fast speed to market in an unstructured cloud data store.
 * [OpenWhisk](https://console.ng.bluemix.net/openwhisk): Execute code on demand in a highly scalable, serverless environment.
 
 ## Featured technologies

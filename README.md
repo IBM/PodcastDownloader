@@ -10,7 +10,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 * utilize the power of OpenWhisk
 * make use of OpenStack Swift object storage
 
-![Architecture](pics/11111.png)
+![Architecture](pics/architecture.png)
 
 ## Flow
 1. A local python app with MySQL backend is set up.

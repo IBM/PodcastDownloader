@@ -35,7 +35,7 @@ When the reader has completed this Code Pattern, they will understand how to:
 1. [Clone the repo](1#-clone-the-repo)
 2. [Create database](#2-create-database)
 3. [Server side](#3-server-side)
-4. [Create user, podcast, and subscription](#4-create-user-podcast-and-database)
+4. [Create user, podcast, and subscription](#4-create-user-podcast-and-subscription)
 5. [Create a zip python action](#5-create-a-zip-python-action)
 6. [Deploy Downloader action to OpenWhisk platform](#6-deploy-downloader-action-to-openwhisk-platform)
 7. [Invoke downloader action from podcast manager](#7-invoke-downloader-action-from-podcast-manager)
@@ -51,57 +51,78 @@ It also helpful if you are slightly familiar with basic OpenWhisk commands [Mode
 - curl command tool or similar tools available.
 
 ### 1. Clone the repo
-Clone the PodcastDownloader`locally.  In a terminal, run:
-```
-$ git clone https://github.com/IBM/PodcastDownloader
-$ cd PodcastDownloader
+Clone the PodcastDownloader locally. In a terminal, run:
+```bash
+git clone https://github.com/IBM/PodcastDownloader
+cd PodcastDownloader
 ```
 
 ### 2. Create database
 Provision a mysql dabatase instance, using the provided podcasts_downloader.sql to create the database
 tables.
-```
-$ mysql -u user -p < podcasts_downloader.sql
+```bash
+mysql -u user -p < podcasts_downloader.sql
 ```
 
 ### 3. Server side
 Start the podcasts manager api server.
+```bash
+export FLASK_APP=podcasts_manager.py
+export FLASK_DEBUG=1
+flask run
 ```
-$ export FLASK_APP=podcasts_manager.py
-$ export FLASK_DEBUG=1
-$ flask run
-```
-### 3. Create user, podcast, and subscription
+### 4. Create user, podcast, and subscription
 Use curl to create the users, subscriptions, and podcasts.
 For example, suppose your podcast manager api server runs locally and listen on port 5000.
-- create a user. `curl -X POST "http://localhost:5000/customer?name=liu"`
-- create a podcast. `curl -X POST "http://localhost:5000/podcast?podname=google&url=https://www.ted.com/talks/rss"`
-- create a subscription. `curl -X POST "http://localhost:5000/sub?customerid=1&podid=1"`
 
-### 4. create a zip python action.
+- create a user.
+```bash
+curl -X POST "http://localhost:5000/customer?name=liu"
+```
+
+- create a podcast.
+```bash
+curl -X POST "http://localhost:5000/podcast?podname=google&url=https://www.ted.com/talks/rss"
+```
+
+- create a subscription.
+```bash
+curl -X POST "http://localhost:5000/sub?customerid=1&podid=1"
+```
+
+### 5. create a zip python action.
 Make sure you have docker installed locally and you have openwhisk/python2action
 docker images already built successfully.
-- `cp DownloaderAction.py  __main__.py`
+
+```bash
+cp DownloaderAction.py  __main__.py
+```
 
 #### Integrate Downloader action with the OpenStack swift client.
 In order to persist the downloaded podcast content on storage, we now support integration
 with [OpenStack](https://www.openstack.org) swift client, to persist the downloaded content on [IBM Object Storage](https://www.bluemix.com).
+
 First, you need to provision an object storage service, and copy all your storage service
-authentication information to VCAP_SERVICES.json, the Downloader Action will read the VCAP_SERVICES.json
+authentication information to `VCAP_SERVICES.json`, the Downloader Action will read the `VCAP_SERVICES.json`
 file, to pass the storage services authentication.
 
-Make the zip python aciton.
-- `docker run --rm -v "$PWD:/tmp" openwhisk/python2action sh
--c "cd tmp; virtualenv virtualenv; source virtualenv/bin/activate; pip install -r requirements.txt;"`
+Make the zip python action.
+```bash
+docker run --rm -v "$PWD:/tmp" openwhisk/python2action sh -c "cd tmp; virtualenv virtualenv; source virtualenv/bin/activate; pip install -r requirements.txt;"
 
-- `zip -r wgetPython.zip virtualenv __main__.py VCAP_SERVICES.json`
+zip -r wgetPython.zip virtualenv __main__.py VCAP_SERVICES.json
+```
 
-### 5. Deploy Downloader action to OpenWhisk platform
+### 6. Deploy Downloader action to OpenWhisk platform
 
-`bx wsk action create wgetPython --kind python:2 wgetPython.zip`
+```bash
+bx wsk action create wgetPython --kind python:2 wgetPython.zip
+```
 
-### 6. Invoke downloader action from podcast manager
-` curl -X POST  -m 50 "http://localhost:5000/download?customername=liu&downloader_url=https://openwhisk.ng.bluemix.net/api/v1/namespaces/<cf_org>_<cf_space>/actions/wgetPython"` 
+### 7. Invoke downloader action from podcast manager
+```bash
+curl -X POST  -m 50 "http://localhost:5000/download?customername=liu&downloader_url=https://openwhisk.ng.bluemix.net/api/v1/namespaces/<cf_org>_<cf_space>/actions/wgetPython"
+``` 
 
 ## Links
 

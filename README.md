@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/IBM/PodcastDownloader.svg?branch=master)](https://travis-ci.org/IBM/PodcastDownloader)
-![IBM Cloud Deployments](https://metrics-tracker.mybluemix.net/stats/527357940ca5e1027fbf945add3b15c4/badge.svg)
 
 # Create a podcast downloader using OpenWhisk
 In this Code Pattern, we will demonstrate the use of OpenWhish by creating a podcast downloader.  A light weight Flask application is set up to request and download the content, which is then retained in OpenStack Swift object storage.
@@ -19,14 +18,14 @@ When the reader has completed this Code Pattern, they will understand how to:
 4. Data is stored in Object Storage OpenStack Swift.
 
 ## Included components
-* [IBM Cloud Object Storage](https://console.bluemix.net/catalog/services/object-storage): Build and deliver cost effective apps and services with high reliability and fast speed to market in an unstructured cloud data store.
-* [OpenWhisk](https://console.ng.bluemix.net/openwhisk): Execute code on demand in a highly scalable, serverless environment.
+* [IBM Cloud Object Storage](https://cloud.ibm.com/catalog/services/object-storage): Build and deliver cost effective apps and services with high reliability and fast speed to market in an unstructured cloud data store.
+* [OpenWhisk](https://cloud.ibm.com/openwhisk): Execute code on demand in a highly scalable, serverless environment.
 
 ## Featured technologies
 * [Microservices](https://www.ibm.com/developerworks/community/blogs/5things/entry/5_things_to_know_about_microservices?lang=en): Collection of fine-grained, loosely coupled services using a lightweight protocol to provide building blocks in modern application composition in the cloud.
 
 # Watch the Video
-[![](http://img.youtube.com/vi/95hDtAAzNnw/0.jpg)](https://www.youtube.com/watch?v=95hDtAAzNnw)
+[![](https://img.youtube.com/vi/95hDtAAzNnw/0.jpg)](https://www.youtube.com/watch?v=95hDtAAzNnw)
 
 # Steps
 
@@ -41,8 +40,8 @@ When the reader has completed this Code Pattern, they will understand how to:
 7. [Invoke downloader action from podcast manager](#7-invoke-downloader-action-from-podcast-manager)
 
 #### Prerequisite
-Make sure you have a [Bluemix](https://console.ng.bluemix.net) account.
-It also helpful if you are slightly familiar with basic OpenWhisk commands [Model and idea](https://github.com/IBM/openwhisk-action-trigger-rule) and have installed both the [Bluemix CLI](https://console.bluemix.net/docs/cli/reference/bluemix_cli/download_cli.html) and the Cloud Functions [Plugin](https://console.bluemix.net/openwhisk/learn/cli).
+Make sure you have a [Bluemix](https://cloud.ibm.com) account.
+It also helpful if you are slightly familiar with basic OpenWhisk commands [Model and idea](https://github.com/IBM/ibm-cloud-functions-action-trigger-rule) and have installed both the [Bluemix CLI](https://cloud.ibm.com/docs/cli/reference/bluemix_cli/download_cli.html) and the Cloud Functions [Plugin](https://cloud.ibm.com/openwhisk/learn/cli).
 
 #### Installation requirements:
 - Python2.7 Installed.
@@ -100,7 +99,7 @@ cp DownloaderAction.py  __main__.py
 
 #### Integrate Downloader action with the OpenStack swift client.
 In order to persist the downloaded podcast content on storage, we now support integration
-with [OpenStack](https://www.openstack.org) swift client, to persist the downloaded content on [IBM Object Storage](https://www.bluemix.com).
+with [OpenStack](https://www.openstack.org) swift client, to persist the downloaded content on [IBM Object Storage](https://www.ibm.com/cloud/object-storage).
 
 First, you need to provision an object storage service, and copy all your storage service
 authentication information to `VCAP_SERVICES.json`, the Downloader Action will read the `VCAP_SERVICES.json`
@@ -122,7 +121,7 @@ bx wsk action create wgetPython --kind python:2 wgetPython.zip
 ### 7. Invoke downloader action from podcast manager
 ```bash
 curl -X POST  -m 50 "http://localhost:5000/download?customername=liu&downloader_url=https://openwhisk.ng.bluemix.net/api/v1/namespaces/<cf_org>_<cf_space>/actions/wgetPython"
-``` 
+```
 
 ## Links
 
@@ -130,6 +129,6 @@ curl -X POST  -m 50 "http://localhost:5000/download?customername=liu&downloader_
 * [OpenStack Swift](https://wiki.openstack.org/wiki/Swift)
 
 ## License
-This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](http://www.apache.org/licenses/LICENSE-2.0.txt).
+This code pattern is licensed under the Apache Software License, Version 2.  Separate third party code objects invoked within this code pattern are licensed by their respective providers pursuant to their own separate licenses. Contributions are subject to the [Developer Certificate of Origin, Version 1.1 (DCO)](https://developercertificate.org/) and the [Apache Software License, Version 2](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
-[Apache Software License (ASL) FAQ](http://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
+[Apache Software License (ASL) FAQ](https://www.apache.org/foundation/license-faq.html#WhatDoesItMEAN)
